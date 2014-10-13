@@ -1,7 +1,34 @@
-DataStructuresProject1
+DataStructuresProject2
 ======================
 
-COSC 311 Project 1 - Array Based Data Structure
+The following is by Bill Sverdlik of Eastern Michigan University
+http://www.emunix.emich.edu/~sverdlik/COSC311/COSC311Program2.html
+
+COSC 311
+Programming Assignment #2
+PLEASE NOTE: this assignment was **redacted** on Monday October 8, 2011
+Database with Double Ended Doubly Linked Lists
+
+What to do:
+
+We have discussed the details of this assignment in class. Basically, you are to repeat assignment #1 but change the underlying data structure to a double ended doubly-linked list. Data records should be added to the end of the main array (the database) and three double ended doubly linked lists should be maintained ; one each for the ID, LastName and FirstName. The linked lists should (of course) be maintained in order!!
+
+
+You MUST use the driver program I have provided , and make some additions. Remember, you should NOT be permitted to add a record with a duplicate index number. You MUST implement all methods as I have indicated.
+
+Printing out the data in forward order should use the "next" link in each node, printing out in reverse order should employ the "prev" link. 
+
+NOTE:
+
+When printing out records, print out ALL fields (ID, first name and last name).
+
+NOTE2:
+
+You would do well to start on this program early!!
+
+
+Assignment 1 for continuity below.
+======================
 
 
 The following is by Bill Sverdlik of Eastern Michigan University
