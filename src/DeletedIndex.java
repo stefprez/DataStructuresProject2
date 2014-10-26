@@ -12,14 +12,13 @@ public class DeletedIndex {
 	private int numberOfElements;
 	private int[] deletedIndexArray;
 
-	public DeletedIndex() {
-		deletedIndexArray = new int[200];
-		numberOfElements = 0;
-	}
-
 	public DeletedIndex(int size) {
 		deletedIndexArray = new int[size];
 		numberOfElements = 0;
+	}
+	
+	public DeletedIndex() {
+		this(200);
 	}
 
 	public int getNumberOfElements() {
