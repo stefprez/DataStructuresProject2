@@ -6,8 +6,7 @@
 
 public class OrderedIndex {
 	private int numberOfRecords;
-	private IndexRecord head;
-	private IndexRecord tail;
+	private IndexRecord head, tail;
 
 	public OrderedIndex() {
 		head = null;
@@ -30,6 +29,11 @@ public class OrderedIndex {
 		return (numberOfRecords == 0);
 	}
 
+	/**
+	 * Returns the IndexRecord at the specified index
+	 * @param indexOfRecordToReturn
+	 * @return IndexRecord that was requested
+	 */
 	public IndexRecord getIndexRecord(int indexOfRecordToReturn) {
 		IndexRecord recordToReturn = head;
 		int counter = 0;
@@ -52,7 +56,7 @@ public class OrderedIndex {
 	 * purposes.
 	 */
 	public void printIncreasing(DataStructureRecord[] datastructure) {
-		if (numberOfRecords == 0)
+		if (this.isEmpty())
 		{
 			System.out.println("Database is empty.");
 		}
@@ -67,9 +71,13 @@ public class OrderedIndex {
 		}
 	}
 	
+	/**
+	 * Print the DataStructure in decreasing order
+	 * @param datastructure DataStructure to print
+	 */
 	public void printDecreasing(DataStructureRecord[] datastructure)
 	{
-		if (numberOfRecords == 0)
+		if (this.isEmpty())
 		{
 			System.out.println("Database is empty.");
 		}
@@ -78,7 +86,7 @@ public class OrderedIndex {
 			IndexRecord recordToPrint = tail;
 			while (!recordToPrint.isTheBeginningOfTheList())
 			{
-				System.out.println(datastructure[recordToPrint.getDatabaseIndex()].toString());
+				System.out.println(datastructure[recordToPrint.getDatabaseIndex()]);
 				recordToPrint = recordToPrint.getPreviousRecord();
 			}
 		}
@@ -91,7 +99,7 @@ public class OrderedIndex {
 	 */
 	public void addRecord(IndexRecord recordToAdd) {
 		
-		if (numberOfRecords == 0)
+		if (this.isEmpty())
 		{
 			head = recordToAdd;
 			tail = recordToAdd;

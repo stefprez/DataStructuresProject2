@@ -10,8 +10,7 @@
  * 
  */
 public class IndexRecord implements Comparable<IndexRecord> {
-	private IndexRecord nextRecord;
-	private IndexRecord previousRecord;
+	private IndexRecord nextRecord, previousRecord;
 	private String data;
 	private int databaseIndex;
 

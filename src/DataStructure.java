@@ -8,30 +8,23 @@ import java.util.Scanner;
 
 public class DataStructure {
 	private DataStructureRecord[] database;
-	private OrderedIndex firstNameIndex;
-	private OrderedIndex lastNameIndex;
-	private OrderedIndex IDIndex;
+	private OrderedIndex firstNameIndex, lastNameIndex, IDIndex;
 	private DeletedIndex deletedIndex;
 	int numberOfRecords;
 
-	public DataStructure() {
-		database = new DataStructureRecord[200];
-		firstNameIndex = new OrderedIndex();
-		lastNameIndex = new OrderedIndex();
-		IDIndex = new OrderedIndex();
-		deletedIndex = new DeletedIndex();
-		numberOfRecords = 0;
-	}
-
 	public DataStructure(int sizeOfDatabase) {
 		database = new DataStructureRecord[sizeOfDatabase];
+		deletedIndex = new DeletedIndex(sizeOfDatabase);
 		firstNameIndex = new OrderedIndex();
 		lastNameIndex = new OrderedIndex();
 		IDIndex = new OrderedIndex();
-		deletedIndex = new DeletedIndex(sizeOfDatabase);
 		numberOfRecords = 0;
 	}
 
+	public DataStructure() {
+		this(200);
+	}
+	
 	public OrderedIndex getFirstNameIndex() {
 		return firstNameIndex;
 	}
@@ -59,39 +52,32 @@ public class DataStructure {
 	/**
 	 * Finds and deletes a record with a matching ID
 	 * 
-	 * @param deleteID
+	 * @param idToDelete
 	 *            ID to be deleted. Should be numeric, positive, and no more
 	 *            than 9 digits long
 	 * @return Index of deleted record or -1 if not found
 	 */
-	public int deleteRecord(String deleteID) {
+	public int deleteRecord(String idToDelete) {
 		// Format ID properly
-		deleteID = deleteID.trim();
-		try
-		{
-			deleteID = String.format("%09d", Integer.parseInt(deleteID));
-		}
-		catch (Exception e)
-		{
-			System.err.println("Invalid ID. Program terminated.");
-			System.exit(0);
-		}
-		int index = this.find(deleteID);
-		boolean found = (index >= 0);
+		idToDelete = verifyAndFormatID(idToDelete);
+		
+		int indexOfIDToDelete = this.find(idToDelete);
+		
+		boolean foundID = (indexOfIDToDelete >= 0);
 
-		if (found) {
+		if (foundID) {
 			// Add index to deletedIndex stack
-			deletedIndex.addIndex(index);
+			deletedIndex.addIndex(indexOfIDToDelete);
 
 			// Remove from OrderedIndexes
-			firstNameIndex.deleteRecord(index);
-			lastNameIndex.deleteRecord(index);
-			IDIndex.deleteRecord(index);
+			firstNameIndex.deleteRecord(indexOfIDToDelete);
+			lastNameIndex.deleteRecord(indexOfIDToDelete);
+			IDIndex.deleteRecord(indexOfIDToDelete);
 
 			numberOfRecords--;
 		}
 
-		return index;
+		return indexOfIDToDelete;
 	}
 
 	/**
@@ -154,7 +140,7 @@ public class DataStructure {
 	}
 
 	/**
-	 * Search for instance of ID using binary search
+	 * Search for instance of ID
 	 * 
 	 * @param tempID
 	 *            ID to search for. Should be numeric, positive, and no more
@@ -174,26 +160,20 @@ public class DataStructure {
 	 * @return Index of the ID in the database or -1 if not found.
 	 */
 	public int find(String tempID) {
-		if (IDIndex.isEmpty())
+		
+		if (IDIndex.isEmpty() || !idHasProperFormat(tempID))
 			return -1;
 		
-		// Format ID properly
-		tempID = tempID.trim();
-		try
-		{
-		tempID = String.format("%09d", Integer.parseInt(tempID));
-		}
-		catch (Exception e)
-		{
-			System.err.println("Invalid ID. Program terminated.");
-			System.exit(0);
-		}
-		
+		tempID = verifyAndFormatID(tempID);
+
 		IndexRecord currentRecord = IDIndex.getHead();
+		boolean idIsFound;
 		
 		while (!currentRecord.isTheEndOfTheList())
 		{
-			if (currentRecord.getData().compareTo(tempID) == 0)
+			idIsFound = (currentRecord.getData().compareTo(tempID) == 0);
+			
+			if (idIsFound)
 			{
 				return currentRecord.getDatabaseIndex();
 			}
@@ -222,15 +202,7 @@ public class DataStructure {
 		lastName = lastName.trim();
 		tempID = tempID.trim();
 
-		try
-		{
-		tempID = String.format("%09d", Integer.parseInt(tempID));
-		}
-		catch (Exception e)
-		{
-			System.err.println("Invalid ID. Program terminated.");
-			System.exit(0);
-		}
+		tempID = verifyAndFormatID(tempID);
 
 		// Check if ID is in use
 		while (search(tempID)) {
@@ -241,16 +213,7 @@ public class DataStructure {
 			System.out.println();
 
 			// Format ID properly
-			tempID = tempID.trim();
-			try {
-			tempID = String.format("%09d", Integer.parseInt(tempID));
-			}
-			catch (Exception e)
-			{
-				System.err.println("Invalid ID. Program terminated.");
-				System.exit(0);
-			}
-
+			tempID = verifyAndFormatID(tempID);
 		}
 
 		DataStructureRecord record = new DataStructureRecord(firstName,
@@ -270,5 +233,60 @@ public class DataStructure {
 		IDIndex.addRecord(new IndexRecord(tempID, indexToInsertAt));
 
 		numberOfRecords++;
+	}
+	
+	/**
+	 * Checks if student ID is numeric
+	 * @param idToCheck
+	 * @return Boolean whether or not the ID has a proper numeric format
+	 */
+	private static boolean idHasProperFormat(String idToCheck)
+	{
+		boolean idIsFormattedCorrectly;
+
+		try
+		{
+			idToCheck = idToCheck.trim();
+			String.format("%09d", Integer.parseInt(idToCheck));
+			idIsFormattedCorrectly = true;
+		}
+		catch (Exception e)
+		{
+			System.out.println("Invalid ID. Must be numeric and less than 9 digits.");
+			idIsFormattedCorrectly = false;
+		}
+
+		return idIsFormattedCorrectly;
+	}
+	
+	/**
+	 * Checks if student ID is numeric, and if not, prompts user to input a correct ID
+	 * @param tempID
+	 * @return Properly formatted ID String
+	 */
+	private static String verifyAndFormatID(String tempID)
+	{
+		boolean tempIDIsNotNumeric;
+
+		do
+		{
+			try
+			{
+				tempID = tempID.trim();
+				tempID = String.format("%09d", Integer.parseInt(tempID));
+				tempIDIsNotNumeric = false;
+
+			}
+			catch (Exception e)
+			{
+				System.out.println("Invalid ID. Must be numeric and less than 9 digits.");
+				System.out.print("Please re-enter an ID: ");
+				Scanner keyboard = new Scanner(System.in);
+				tempID = keyboard.nextLine();
+				tempIDIsNotNumeric = true;
+			}
+		} while (tempIDIsNotNumeric);
+		
+		return tempID;
 	}
 }

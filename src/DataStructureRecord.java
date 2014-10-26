@@ -6,20 +6,16 @@
  */
 
 public class DataStructureRecord {
-	private String firstName;
-	private String lastName;
-	private String ID;
-
-	public DataStructureRecord() {
-		firstName = "";
-		lastName = "";
-		ID = "";
-	}
+	private String firstName, lastName, ID;
 
 	public DataStructureRecord(String firstName, String lastName, String ID) {
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.ID = ID;
+	}
+	
+	public DataStructureRecord() {
+		this("", "", "");
 	}
 
 	public String getFirstName() {
