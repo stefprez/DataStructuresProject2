@@ -24,7 +24,7 @@ public class DataStructure {
 	public DataStructure() {
 		this(200);
 	}
-	
+
 	public OrderedIndex getFirstNameIndex() {
 		return firstNameIndex;
 	}
@@ -60,9 +60,9 @@ public class DataStructure {
 	public int deleteRecord(String idToDelete) {
 		// Format ID properly
 		idToDelete = verifyAndFormatID(idToDelete);
-		
+
 		int indexOfIDToDelete = this.find(idToDelete);
-		
+
 		boolean foundID = (indexOfIDToDelete >= 0);
 
 		if (foundID) {
@@ -124,18 +124,13 @@ public class DataStructure {
 		// Determine which order to list it in, if at all
 		if (indexToPrint.isEmpty()) {
 			System.out.println("Database is empty.\n");
-		} 
-		else if (order == 1) 
-		{
+		} else if (order == 1) {
 			// Code for increasing order
 			indexToPrint.printIncreasing(database);
-		} 
-		else if (order == 2) 
-		{
+		} else if (order == 2) {
 			// Code for decreasing order
 			indexToPrint.printDecreasing(database);
-		} 
-		else
+		} else
 			System.err.println("Invalid order input for listIt");
 	}
 
@@ -160,30 +155,32 @@ public class DataStructure {
 	 * @return Index of the ID in the database or -1 if not found.
 	 */
 	public int find(String tempID) {
-		
+
 		if (IDIndex.isEmpty() || !idHasProperFormat(tempID))
 			return -1;
-		
+
 		tempID = verifyAndFormatID(tempID);
 
 		IndexRecord currentRecord = IDIndex.getHead();
 		boolean idIsFound;
-		
-		while (!currentRecord.isTheEndOfTheList())
-		{
+
+		while (!currentRecord.isTheEndOfTheList()) {
 			idIsFound = (currentRecord.getData().compareTo(tempID) == 0);
-			
-			if (idIsFound)
-			{
+
+			if (idIsFound) {
 				return currentRecord.getDatabaseIndex();
-			}
-			else
-			{
+			} else {
 				currentRecord = currentRecord.getNextRecord();
 			}
 		}
 		
-		return -1; //Not found
+		idIsFound = (currentRecord.getData().compareTo(tempID) == 0);
+
+		if (idIsFound) {
+			return currentRecord.getDatabaseIndex();
+		} else {
+			return -1; // Not found
+		}
 	}
 
 	/**
@@ -234,59 +231,55 @@ public class DataStructure {
 
 		numberOfRecords++;
 	}
-	
+
 	/**
 	 * Checks if student ID is numeric
+	 * 
 	 * @param idToCheck
 	 * @return Boolean whether or not the ID has a proper numeric format
 	 */
-	private static boolean idHasProperFormat(String idToCheck)
-	{
+	private static boolean idHasProperFormat(String idToCheck) {
 		boolean idIsFormattedCorrectly;
 
-		try
-		{
+		try {
 			idToCheck = idToCheck.trim();
 			String.format("%09d", Integer.parseInt(idToCheck));
 			idIsFormattedCorrectly = true;
-		}
-		catch (Exception e)
-		{
-			System.out.println("Invalid ID. Must be numeric and less than 9 digits.");
+		} catch (Exception e) {
+			System.out
+			.println("Invalid ID. Must be numeric and less than 9 digits.");
 			idIsFormattedCorrectly = false;
 		}
 
 		return idIsFormattedCorrectly;
 	}
-	
+
 	/**
-	 * Checks if student ID is numeric, and if not, prompts user to input a correct ID
+	 * Checks if student ID is numeric, and if not, prompts user to input a
+	 * correct ID
+	 * 
 	 * @param tempID
 	 * @return Properly formatted ID String
 	 */
-	private static String verifyAndFormatID(String tempID)
-	{
+	private static String verifyAndFormatID(String tempID) {
 		boolean tempIDIsNotNumeric;
 
-		do
-		{
-			try
-			{
+		do {
+			try {
 				tempID = tempID.trim();
 				tempID = String.format("%09d", Integer.parseInt(tempID));
 				tempIDIsNotNumeric = false;
 
-			}
-			catch (Exception e)
-			{
-				System.out.println("Invalid ID. Must be numeric and less than 9 digits.");
+			} catch (Exception e) {
+				System.out
+				.println("Invalid ID. Must be numeric and less than 9 digits.");
 				System.out.print("Please re-enter an ID: ");
 				Scanner keyboard = new Scanner(System.in);
 				tempID = keyboard.nextLine();
 				tempIDIsNotNumeric = true;
 			}
 		} while (tempIDIsNotNumeric);
-		
+
 		return tempID;
 	}
 }

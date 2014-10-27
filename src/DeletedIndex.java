@@ -16,7 +16,7 @@ public class DeletedIndex {
 		deletedIndexArray = new int[size];
 		numberOfElements = 0;
 	}
-	
+
 	public DeletedIndex() {
 		this(200);
 	}

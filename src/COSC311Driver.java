@@ -33,7 +33,7 @@ public class COSC311Driver {
 	static DataStructure myStructure = new DataStructure();
 
 	public static void main(String[] args) {
-		
+
 		/*
 		 * The following declaration declares a data structure that will change
 		 * from one assignment to the next. For example, you will need to
@@ -41,8 +41,9 @@ public class COSC311Driver {
 		 */
 
 		System.out.println("Project 2");
-		
-		// Comment out this try-catch block of code to disable automatic filling of dataStrucutre!
+
+		// Comment out this try-catch block of code to disable automatic filling
+		// of dataStrucutre!
 		try {
 			FileReader.fillDataStructure(myStructure);
 		} catch (IOException e) {
@@ -109,21 +110,21 @@ public class COSC311Driver {
 
 	public static void addIt() {
 		String name1, name2, tempID;
-//		boolean found;
+		// boolean found;
 		Scanner keyboard = new Scanner(System.in);
 
 		// *****Update: My insert method handles checking for a unique ID*****
-//		do {
-			System.out.print("Enter a unique ID number to add: ");
-			tempID = keyboard.nextLine();
-//
-//			// is it unique ?
-//			found = myStructure.search(tempID);
-//			if (found) {
-//				System.out.println("ID already in use");
-//				System.out.println("Please re-enter a unique ID.");
-//			}
-//		} while (found);
+		// do {
+		System.out.print("Enter a unique ID number to add: ");
+		tempID = keyboard.nextLine();
+		//
+		// // is it unique ?
+		// found = myStructure.search(tempID);
+		// if (found) {
+		// System.out.println("ID already in use");
+		// System.out.println("Please re-enter a unique ID.");
+		// }
+		// } while (found);
 
 		// We found a unique ID. Now ask for first and last name
 

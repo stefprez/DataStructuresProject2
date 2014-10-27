@@ -28,39 +28,32 @@ public class IndexRecord implements Comparable<IndexRecord> {
 	public int getDatabaseIndex() {
 		return databaseIndex;
 	}
-	
-	public IndexRecord getNextRecord()
-	{
+
+	public IndexRecord getNextRecord() {
 		return nextRecord;
 	}
-	
-	public IndexRecord getPreviousRecord()
-	{
+
+	public IndexRecord getPreviousRecord() {
 		return previousRecord;
 	}
-	
-	public void setNextRecord(IndexRecord recordToSet)
-	{
+
+	public void setNextRecord(IndexRecord recordToSet) {
 		nextRecord = recordToSet;
 	}
-	
-	public void setPreviousRecord(IndexRecord recordToSet)
-	{
+
+	public void setPreviousRecord(IndexRecord recordToSet) {
 		previousRecord = recordToSet;
 	}
-	
-	public boolean isTheEndOfTheList()
-	{
+
+	public boolean isTheEndOfTheList() {
 		return (nextRecord == null);
 	}
-	
-	public boolean isTheBeginningOfTheList()
-	{
+
+	public boolean isTheBeginningOfTheList() {
 		return (previousRecord == null);
 	}
-	
-	public int compareTo(IndexRecord recordToCompare)
-	{
+
+	public int compareTo(IndexRecord recordToCompare) {
 		return this.data.compareTo(recordToCompare.getData());
 	}
 

@@ -13,7 +13,7 @@ public class DataStructureRecord {
 		this.lastName = lastName;
 		this.ID = ID;
 	}
-	
+
 	public DataStructureRecord() {
 		this("", "", "");
 	}
